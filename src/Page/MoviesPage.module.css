@@ -1,0 +1,9 @@
+.title1 {
+    font-size: '6rem';
+    font-weight: 'bold';
+    text-align: 'center';
+    margin: '2rem 0';
+    text-transform: 'uppercase';
+    letter-spacing: '0.1em';
+    color: '#3333'
+  }
