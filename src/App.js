@@ -105,14 +105,20 @@ function App() {
   const [movies, setMovies] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
-  const { isAuthenticated } = useAuth0();
-
+ // const { isAuthenticated } = useAuth0();
+  const [isAuthenticated,setIsAuthenticated] = useState(false);
   const fetchMoviesHandler = useCallback(async () => {
     setIsLoading(true);
     setError(null);
     try {
+      const response = await fetch(
+        "https://http-test-d28cc-default-rtdb.firebaseio.com/Movies.json"
+      );
+      if (!response.ok) {
+        throw new Error("Something went wrong!");
+      }
 
-      const data = output;
+      const data = await response.json();
 
       const loadedMovies = [];
 
@@ -120,7 +126,8 @@ function App() {
         loadedMovies.push({
           id: key,
           title: data[key].title,
-          image: data[key].image
+          openingText: data[key].openingText,
+          releaseDate: data[key].releaseDate,
         });
       }
 
@@ -168,7 +175,7 @@ function App() {
 
   return (
     <Routes>
-      <Route path="/" element={isAuthenticated?<MoviePage addMovieHandler={addMovieHandler} fetchMoviesHandler={fetchMoviesHandler} content={content}></MoviePage>:<Login></Login>}/>
+      <Route path="/" element={isAuthenticated?<MoviePage addMovieHandler={addMovieHandler} fetchMoviesHandler={fetchMoviesHandler} content={content}></MoviePage>:<Login setIsAuthenticated={setIsAuthenticated}></Login>}/>
       <Route path="/movieDetails" element={<MovieDetails></MovieDetails>} ></Route>
     </Routes>
   );

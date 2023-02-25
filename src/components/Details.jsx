@@ -1,4 +1,7 @@
 import React from "react";
+import ReactPlayer from 'react-player/youtube'
+
+import videos from "../Assets/video.mp4";
 
 const Details = (props) => {
     const boxStyle = {
@@ -25,7 +28,9 @@ const Details = (props) => {
     
       return (
         <div style={boxStyle}>
-          <img src={props.imageUrl} alt={props.title} style={imageStyle} />
+          <video width="650" height="400" controls>
+             <source src={videos} type="video/mp4"></source>
+          </video>
           <h2 style={titleStyle}>{props.title}</h2>
         </div>
       );

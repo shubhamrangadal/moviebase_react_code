@@ -1,12 +1,12 @@
 import React,{useState} from "react";
 import {useNavigate } from "react-router-dom"
-import { useAuth0 } from '@auth0/auth0-react';
 
-const LoginComponent = () => {
+
+const LoginComponent = (props) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [error,setError] = useState('');
   const navigate = useNavigate();
-  const { loginWithRedirect } = useAuth0();
 
   const containerStyle = {
     display: 'flex',
@@ -54,11 +54,34 @@ const LoginComponent = () => {
     setPassword(event.target.value);
   };
 
+  const handleLogin= async(email,password) => {
+    try {
+      const response = await fetch(
+        `http://localhost:8080/users/${email}/${password}`
+      );
+      if (!response.ok) {
+        throw new Error("Something went wrong!");
+      }
+
+      const data = await response.json();
+      if(!data) {
+        throw Error("Login Failed");
+      }else{
+        localStorage.setItem("userId",data["id"])
+        localStorage.setItem("username",data["username"])
+        props.isAuthenticated(true);
+      }
+      
+    } catch (error) {
+      setError(error.message);
+    }
+  }
+
   const handleSubmit = (event) => {
     event.preventDefault();
     console.log('Email:', email);
     console.log('Password:', password);
-    loginWithRedirect();
+    handleLogin(email,password);
   };
 
   return (
