@@ -6,6 +6,99 @@ import { Routes, Route } from "react-router-dom";
 
 import classes from "./MoviesPage.module.css";
 
+const output = [
+  {
+      "id": 22,
+      "title": "Rambo: Last Blood",
+      "releaseDate": "2019",
+      "rating": 5.8,
+      "image": "https://image.tmdb.org/t/p/original/kTQ3J8oTTKofAVLYnds2cHUz9KO.jpg",
+      "category": "Action",
+      "director": "Adrian Grunberg"
+  },
+  {
+      "id": 23,
+      "title": "Jumanji: The Next Level",
+      "releaseDate": "2019",
+      "rating": 6.7,
+      "image": "https://image.tmdb.org/t/p/original/bB42KDdfWkOvmzmYkmK58ZlCa9P.jpg",
+      "category": "Adventure",
+      "director": "Jake Kasdan"
+  },
+  {
+      "id": 24,
+      "title": "Charlies Angels",
+      "releaseDate": "2019",
+      "rating": 5.8,
+      "image": "https://image.tmdb.org/t/p/original/4K86L3qLrXyRDZ8DMpvLmx6JFuA.jpg",
+      "category": "Action",
+      "director": "Elizabeth Banks"
+  },
+  {
+      "id": 25,
+      "title": "The Irishman",
+      "releaseDate": "2019",
+      "rating": 7.9,
+      "image": "https://image.tmdb.org/t/p/original/vCHTIBT6TJU6unGI0AMr5BXwVFI.jpg",
+      "category": "Crime",
+      "director": "Martin Scorsese"
+  },
+  {
+      "id": 26,
+      "title": "Doctor Sleep",
+      "releaseDate": "2019",
+      "rating": 7.1,
+      "image": "https://image.tmdb.org/t/p/original/p69QzIBbN06aTYqRRiCOY1emNBh.jpg",
+      "category": "Horror",
+      "director": "Mike Flanagan"
+  },
+  {
+      "id": 27,
+      "title": "1917",
+      "releaseDate": "2019",
+      "rating": 8.3,
+      "image": "https://image.tmdb.org/t/p/original/iZf0KyrE25z1sage4SYFLCCrMi9.jpg",
+      "category": "Drama",
+      "director": "Sam Mendes"
+  },
+  {
+      "id": 1,
+      "title": "Avengers: Endgame",
+      "releaseDate": "2019",
+      "rating": 8.4,
+      "image": "https://image.tmdb.org/t/p/original/or06FN3Dka5tukK1e9sl16pB3iy.jpg",
+      "category": "Action/Adventure",
+      "director": "Anthony Russo, Joe Russo"
+  },
+  {
+      "id": 2,
+      "title": "The Lion King",
+      "releaseDate": "2019",
+      "rating": 6.9,
+      "image": "https://image.tmdb.org/t/p/original/2bXbqYdUdNVa8VIWXVfclP2ICtT.jpg",
+      "category": "Family/Adventure",
+      "director": "Jon Favreau"
+  },
+  {
+      "id": 3,
+      "title": "Joker",
+      "releaseDate": "2019",
+      "rating": 8.4,
+      "image": "https://im˳age.tmdb.org/t/p/original/udDclJoHjfjb8Ekgsd4FDteOkCU.jpg",
+      "category": "Thriller/Drama",
+      "director": "Todd Phillips"
+  },
+  {
+      "id": 4,
+      "title": "Frozen II",
+      "releaseDate": "2019",
+      "rating": 7.1,
+      "image": "https://image.tmdb.org/t/p/original/pjeMs3yqRmFL3giJy4PMXWZTTPa.jpg",
+      "category": "Family/Adventure",
+      "director": "Chris Buck, Jennifer Lee"
+  }
+]
+
 const MoviePage = (props) => {
   const [seenMovies,setSeenMovies] = useState(<p>Found no movies.</p>);
   const [newMovies,setNewMovies] = useState(<p>Found no movies.</p>);
@@ -57,12 +150,18 @@ const MoviePage = (props) => {
       }
     }, []);
   
-    useEffect(() => {
+    /* useEffect(() => {
       fetchMoviesHandler(`http://localhost:8080/seenmovies/${userId}`,setSeenMovies);
       fetchMoviesHandler(`http://localhost:8080/movies/notseen/${userId}`,setNewMovies);
       fetchMoviesHandler(`http://localhost:8080/movies/recommend/${userId}`,setRecommendedMovies);
     }, [fetchMoviesHandler]);
+   */
   
+    useEffect(() => {
+      let content = <MoviesList movies={output} />;
+     setSeenMovies(content);
+    },[])
+
     return (<
         div
         style={{
@@ -71,15 +170,15 @@ const MoviePage = (props) => {
     >
     <section>
     <h2 style={titleStyle} >Seen Movies</h2>
-    {props.content}
+    {seenMovies}
       </section>
       <section>
       <h2 style={titleStyle} >New Movies</h2>  
-      {props.content}
+      {newMovies}
       </section>
       <section>
       <h2 style={titleStyle} >Recommended Movies</h2>
-      {props.content}</section></div>)
+      {recommendedMovies}</section></div>)
 }
 
 export default MoviePage;

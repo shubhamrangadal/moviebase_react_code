@@ -1,4 +1,4 @@
-import React,{useState} from "react"
+import React,{useEffect, useState, useCallback} from "react"
 import {useLocation,useNavigate} from "react-router-dom";
 
 
@@ -8,86 +8,6 @@ import Popup from "../components/AddReview";
 
 const MovieDetails = (props) => {
     const [reviews,setReviews] = useState([
-        {
-          "id": 1,
-          "rating": 5,
-          "commentTitle": "Good",
-          "commentContent": "Good movie",
-          "userId": 1,
-          "movieId": 1
-        },
-        {
-          "id": 2,
-          "rating": 3,
-          "commentTitle": "Okay",
-          "commentContent": "Not bad, not great",
-          "userId": 3,
-          "movieId": 1
-        },
-        {
-          "id": 3,
-          "rating": 4,
-          "commentTitle": "Enjoyable",
-          "commentContent": "Had a good time watching this movie",
-          "userId": 4,
-          "movieId": 1
-        },
-        {
-          "id": 4,
-          "rating": 5,
-          "commentTitle": "Good",
-          "commentContent": "Good movie",
-          "userId": 2,
-          "movieId": 1
-        },
-        {
-          "id": 5,
-          "rating": 2,
-          "commentTitle": "Disappointing",
-          "commentContent": "Not what I was expecting",
-          "userId": 5,
-          "movieId": 1
-        },
-        {
-          "id": 6,
-          "rating": 5,
-          "commentTitle": "Amazing",
-          "commentContent": "Loved every minute of it",
-          "userId": 6,
-          "movieId": 1
-        },
-        {
-          "id": 7,
-          "rating": 4,
-          "commentTitle": "Solid",
-          "commentContent": "Solid movie overall",
-          "userId": 7,
-          "movieId": 1
-        },
-        {
-          "id": 8,
-          "rating": 3,
-          "commentTitle": "Meh",
-          "commentContent": "Nothing special",
-          "userId": 8,
-          "movieId": 1
-        },
-        {
-          "id": 9,
-          "rating": 4,
-          "commentTitle": "Decent",
-          "commentContent": "Decent movie",
-          "userId": 9,
-          "movieId": 1
-        },
-        {
-          "id": 10,
-          "rating": 5,
-          "commentTitle": "Great",
-          "commentContent": "Great movie",
-          "userId": 10,
-          "movieId": 1
-        }
         ])
     const [showAddMovie,setShowAddMovie] = useState(false); 
     const navigate = useNavigate();
@@ -96,12 +16,77 @@ const MovieDetails = (props) => {
     console.log("MovieDetails",state);
     
     const AddMovie = (movie) => {
-        setReviews([...reviews,movie])
+        addMovieHandler(movie).then(
+            (data) => {
+                setReviews([...reviews,movie])
+            }
+        ).catch(
+            (error) => {
+                console.log(error)
+            }
+        )
     }
+
+    async function addMovieHandler(movie) {
+        try{
+            const response = await fetch(
+                "https://http-test-d28cc-default-rtdb.firebaseio.com/Movies.json",
+                {
+                  method: "POST",
+                  body: JSON.stringify(movie),
+                  headers: {
+                    "Content-Type": "application/json",
+                  },
+                }
+              );
+              if (!response.ok) {
+                  throw new Error("Something went wrong!");
+                }
+      
+              const data = await response.json();
+              console.log(data);
+              return data
+        }catch(error){
+           throw Error("SomeThing went wrong");
+        }
+      }
      
     if(!state) {
         window.location.href = "http://localhost:3000/";
     }
+
+    const fetchMoviesHandler = useCallback(async (url,Fn) => {
+        try {
+          const response = await fetch(
+            url
+          );
+          if (!response.ok) {
+            throw new Error("Something went wrong!");
+          }
+    
+          const data = await response.json();
+    
+          const loadedMovies = [];
+    
+          for (const key in data) {
+            loadedMovies.push({
+              id: data[key].id,
+              commentTitle: data[key].commentTitle,
+              commentContent: data[key].commentContent,
+              rating: data[key].rating,
+              userId:data[key].userId,
+              movieId:data[key].movieId,
+            });
+          }
+    
+          Fn(loadedMovies);
+        } catch (error) {
+        }
+      }, []);
+
+      useEffect(() => {
+        fetchMoviesHandler(`http://localhost:8080/ratings/moviebyid/${state.movie.id}`,setReviews);
+      },[fetchMoviesHandler])
     
 
     return (

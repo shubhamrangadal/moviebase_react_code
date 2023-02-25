@@ -175,7 +175,7 @@ function App() {
 
   return (
     <Routes>
-      <Route path="/" element={isAuthenticated?<MoviePage addMovieHandler={addMovieHandler} fetchMoviesHandler={fetchMoviesHandler} content={content}></MoviePage>:<Login setIsAuthenticated={setIsAuthenticated}></Login>}/>
+      <Route path="/" element={true?<MoviePage addMovieHandler={addMovieHandler} fetchMoviesHandler={fetchMoviesHandler} content={content}></MoviePage>:<Login setIsAuthenticated={setIsAuthenticated}></Login>}/>
       <Route path="/movieDetails" element={<MovieDetails></MovieDetails>} ></Route>
     </Routes>
   );
