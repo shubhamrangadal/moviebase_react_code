@@ -6,7 +6,15 @@ import classes from './MoviesList.module.css';
 
 const MovieList = (props) => {
   const handleClick=(movie) => {
-     props.setSelectMovie(movie)
+    if(props.addMovieHandler) {
+      props.addMovieHandler(movie).then(
+        (data) => {
+          console.log("Added to seen")
+        }
+      ).catch((error) => {
+        console.log(error)
+      })
+    }
   }
 
   return (

@@ -10,8 +10,7 @@ const MovieDetails = (props) => {
     const [reviews,setReviews] = useState([
         ])
     const [showAddMovie,setShowAddMovie] = useState(false); 
-    const navigate = useNavigate();
-    
+     
     let { state } = useLocation();
     console.log("MovieDetails",state);
     
@@ -30,7 +29,7 @@ const MovieDetails = (props) => {
     async function addMovieHandler(movie) {
         try{
             const response = await fetch(
-                "https://http-test-d28cc-default-rtdb.firebaseio.com/Movies.json",
+                "http://localhost:8080/ratings/createrating",
                 {
                   method: "POST",
                   body: JSON.stringify(movie),
@@ -49,7 +48,7 @@ const MovieDetails = (props) => {
         }catch(error){
            throw Error("SomeThing went wrong");
         }
-      }
+    }
      
     if(!state) {
         window.location.href = "http://localhost:3000/";
@@ -93,14 +92,14 @@ const MovieDetails = (props) => {
         <>
         <div style={{display:"flex",justifyContent:"center",alignItem:"center",height:"100%"}}>
             <section>
-                 <Details title={state.movie.title} ></Details>
+                 <Details releaseDate={state.movie.releaseDate} rating={state.movie.rating} director={state.movie.director} category={state.movie.category} image={state.movie.image}  title={state.movie.title} ></Details>
             </section>
             <section>
                 <Review reviews={reviews} setShowAddMovie={setShowAddMovie} ></Review>        
             </section>
         </div>
         {
-        showAddMovie && <Popup AddMovie={AddMovie} Cancel={() => setShowAddMovie(false)}></Popup>
+        showAddMovie && <Popup movie={state.movie} AddMovie={AddMovie} Cancel={() => setShowAddMovie(false)}></Popup>
         }
         </>
     )

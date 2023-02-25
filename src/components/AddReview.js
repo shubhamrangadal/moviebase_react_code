@@ -12,12 +12,11 @@ const Popup = ({ AddMovie, Cancel }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     AddMovie({
-        "id": 4,
         "rating": rating,
         "commentTitle": commentTitle,
         "commentContent": commentContent,
-        "userId": 2,
-        "movieId": 1
+        "userId": localStorage.getItem("userId"),
+        "movieId": props.Movie.id
       });
       Cancel()
   };

@@ -4,34 +4,66 @@ import ReactPlayer from 'react-player/youtube'
 import videos from "../Assets/video.mp4";
 
 const Details = (props) => {
-    const boxStyle = {
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        padding: '2rem',
-      };
-    
-      const imageStyle = {
-        width: '80%',
-        maxHeight: '500px',
-        objectFit: 'contain',
-      };
-    
-      const titleStyle = {
-        fontSize: '3em',
-        fontWeight: 'bold',
-        margin: '2rem 0',
-        textTransform: 'uppercase',
-        letterSpacing: '0.1em',
-        color: '#333'
-      };
+  const boxStyle = {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    padding: "2rem",
+  };
+
+  const imageStyle = {
+    width: "80%",
+    maxHeight: "500px",
+    objectFit: "contain",
+    marginBottom: "2rem",
+  };
+
+  const titleStyle = {
+    fontSize: "2.5em", // updated font size
+    fontWeight: "bold",
+    margin: "0",
+    textTransform: "uppercase",
+    letterSpacing: "0.1em",
+    color: "#333",
+  };
+
+  const detailsStyle = {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "flex-start",
+    margin: "1rem 0",
+    fontSize: "1.2em",
+    color: "#666",
+  };
+
     
       return (
         <div style={boxStyle}>
           <video width="650" height="400" controls>
              <source src={videos} type="video/mp4"></source>
           </video>
-          <h2 style={titleStyle}>{props.title}</h2>
+          <div style={{ display: "flex", alignItems: "center" }}>
+        <img src={props.image} style={imageStyle} alt="Movie Poster" />
+        <div style={{ display: "flex", flexDirection: "column" }}>
+          <h2 style={titleStyle}>
+            <span>{props.title}</span>
+          </h2>
+          <div style={detailsStyle}>
+            <span>
+              <strong>Category:</strong> {props.category}
+            </span>
+            <span>
+              <strong>Director:</strong> {props.director}
+            </span>
+            <span>
+              <strong>Rating:</strong> {props.rating}
+            </span>
+            <span>
+              <strong>Release Date:</strong> {props.releaseDate}
+            </span>
+          </div>
+        </div>
+      </div>
         </div>
       );
 }
