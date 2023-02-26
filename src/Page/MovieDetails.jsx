@@ -67,8 +67,8 @@ const MovieDetails = (props) => {
               commentTitle: data[key].commentTitle,
               commentContent: data[key].commentContent,
               rating: data[key].rating,
-              userId:data[key].userId,
-              movieId:data[key].movieId,
+              user_id:data[key]['user_id'],
+              movie_id:data[key]['movie_id'],
             });
           }
 

@@ -12,7 +12,7 @@ const Review = (props) => {
         letterSpacing: '0.1em',
         color: '#333'
       };
-     
+
   const boxStyle = {border: '1px solid #333',
   padding: '1rem',
   width: '100%',
@@ -36,9 +36,9 @@ maxHeight: '60vh'
 
   const reviewList = props.reviews.map(review => (
     <div key={review.id} style={reviewBoxStyle}>
-      <h3 style={{ margin: '0' }}>{review.commentTitle}</h3>
-      
-      <p style={{ marginBottom: '1rem' }}>{review.commentContent}</p>
+      <h3 style={{ margin: '0' }}>{review.commenttitle}</h3>
+
+      <p style={{ marginBottom: '1rem' }}>{review.commentdesc}</p>
       <p style={{ margin: '0', fontWeight: 'bold' }}>Rating: {review.rating}</p>
     </div>
   ));
