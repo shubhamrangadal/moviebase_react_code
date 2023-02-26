@@ -9,24 +9,17 @@ import Popup from "../components/AddReview";
 const MovieDetails = (props) => {
     const [reviews,setReviews] = useState([
         ])
-    const [showAddMovie,setShowAddMovie] = useState(false); 
-     
+    const [showAddMovie,setShowAddMovie] = useState(false);
+
     let { state } = useLocation();
     console.log("MovieDetails",state);
-    
+
     const AddMovie = (movie) => {
-        addMovieHandler(movie).then(
-            (data) => {
-                setReviews([...reviews,movie])
-            }
-        ).catch(
-            (error) => {
-                console.log(error)
-            }
-        )
+        addMovieHandler(movie)
     }
 
     async function addMovieHandler(movie) {
+        console.log("addreview",movie)
         try{
             const response = await fetch(
                 "http://localhost:8080/ratings/createrating",
@@ -38,18 +31,19 @@ const MovieDetails = (props) => {
                   },
                 }
               );
-              if (!response.ok) {
-                  throw new Error("Something went wrong!");
-                }
-      
-              const data = await response.json();
-              console.log(data);
-              return data
+            console.log("review response : "+response.ok)
+            if (!response.ok) {
+              throw new Error("Something went wrong!");
+            }
+
+
+            //const data = await response.json();
+            setReviews([...reviews,movie])
         }catch(error){
            throw Error("SomeThing went wrong");
         }
     }
-     
+
     if(!state) {
         window.location.href = "http://localhost:3000/";
     }
@@ -62,11 +56,11 @@ const MovieDetails = (props) => {
           if (!response.ok) {
             throw new Error("Something went wrong!");
           }
-    
+
           const data = await response.json();
-    
+
           const loadedMovies = [];
-    
+
           for (const key in data) {
             loadedMovies.push({
               id: data[key].id,
@@ -77,7 +71,7 @@ const MovieDetails = (props) => {
               movieId:data[key].movieId,
             });
           }
-    
+
           Fn(loadedMovies);
         } catch (error) {
         }
@@ -86,7 +80,7 @@ const MovieDetails = (props) => {
       useEffect(() => {
         fetchMoviesHandler(`http://localhost:8080/ratings/moviebyid/${state.movie.id}`,setReviews);
       },[fetchMoviesHandler])
-    
+
 
     return (
         <>
@@ -95,7 +89,7 @@ const MovieDetails = (props) => {
                  <Details releaseDate={state.movie.releaseDate} rating={state.movie.rating} director={state.movie.director} category={state.movie.category} image={state.movie.image}  title={state.movie.title} ></Details>
             </section>
             <section>
-                <Review reviews={reviews} setShowAddMovie={setShowAddMovie} ></Review>        
+                <Review reviews={reviews} setShowAddMovie={setShowAddMovie} ></Review>
             </section>
         </div>
         {

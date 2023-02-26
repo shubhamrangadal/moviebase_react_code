@@ -69,9 +69,9 @@ const LoginComponent = (props) => {
       }else{
         localStorage.setItem("userId",data["id"])
         localStorage.setItem("username",data["username"])
-        props.isAuthenticated(true);
+        props.setIsAuthenticated(true);
       }
-      
+
     } catch (error) {
       setError(error.message);
     }
@@ -89,7 +89,7 @@ const LoginComponent = (props) => {
       <div style={boxStyle}>
         <h2 style={{ margin: '0' }}>Log in</h2>
         <form onSubmit={handleSubmit} style={{ width: '100%' }}>
-          <input type="email" placeholder="Email" style={inputStyle} value={email} onChange={handleEmailChange} />
+          <input type="text" placeholder="Username" style={inputStyle} value={email} onChange={handleEmailChange} />
           <input type="password" placeholder="Password" style={inputStyle} value={password} onChange={handlePasswordChange} />
           <button type="submit" style={buttonStyle}>Log in</button>
         </form>

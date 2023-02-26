@@ -5,6 +5,7 @@ import Movie from './Movie';
 import classes from './MoviesList.module.css';
 
 const MovieList = (props) => {
+  console.log("movieList",props)
   const handleClick=(movie) => {
     if(props.addMovieHandler) {
       props.addMovieHandler(movie).then(
@@ -12,7 +13,7 @@ const MovieList = (props) => {
           console.log("Added to seen")
         }
       ).catch((error) => {
-        console.log(error)
+        console.log(error+" movie list failed to add")
       })
     }
   }

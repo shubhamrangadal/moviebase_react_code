@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-const Popup = ({ AddMovie, Cancel }) => {
+const Popup = ({ AddMovie, Cancel, movie}) => {
   const [commentTitle, setCommentTitle] = useState('');
   const [commentContent, setCommentContent] = useState('');
   const [rating, setRating] = useState(0);
@@ -13,11 +13,11 @@ const Popup = ({ AddMovie, Cancel }) => {
     e.preventDefault();
     AddMovie({
         "rating": rating,
-        "commentTitle": commentTitle,
-        "commentContent": commentContent,
-        "userId": localStorage.getItem("userId"),
-        "movieId": props.Movie.id
-      });
+        "commenttitle": commentTitle,
+        "commentdesc": commentContent,
+        "user_id": parseInt(localStorage.getItem("userId")),
+        "movie_id": movie.id
+    });
       Cancel()
   };
 

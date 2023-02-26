@@ -12,10 +12,11 @@ const Details = (props) => {
   };
 
   const imageStyle = {
-    width: "80%",
+    width: "50%", // updated width
     maxHeight: "500px",
     objectFit: "contain",
     marginBottom: "2rem",
+    marginTop: "1rem", // added margin top
   };
 
   const titleStyle = {
@@ -36,13 +37,13 @@ const Details = (props) => {
     color: "#666",
   };
 
-    
-      return (
-        <div style={boxStyle}>
-          <video width="650" height="400" controls>
-             <source src={videos} type="video/mp4"></source>
-          </video>
-          <div style={{ display: "flex", alignItems: "center" }}>
+
+  return (
+    <div style={boxStyle}>
+      <video width="850" height="700" controls>
+        <source src={videos} type="video/mp4"></source>
+      </video>
+      <div style={{ display: "flex", alignItems: "center" }}>
         <img src={props.image} style={imageStyle} alt="Movie Poster" />
         <div style={{ display: "flex", flexDirection: "column" }}>
           <h2 style={titleStyle}>
@@ -64,8 +65,8 @@ const Details = (props) => {
           </div>
         </div>
       </div>
-        </div>
-      );
+    </div>
+  );
 }
 
 export default Details
