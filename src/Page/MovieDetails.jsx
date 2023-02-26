@@ -1,5 +1,7 @@
 import React,{useEffect, useState, useCallback} from "react"
 import {useLocation,useNavigate} from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 
 
 import Review from "../components/Review";
@@ -7,6 +9,7 @@ import Details from "../components/Details";
 import Popup from "../components/AddReview";
 
 const MovieDetails = (props) => {
+    const navigate = useNavigate();
     const [reviews,setReviews] = useState([
         ])
     const [showAddMovie,setShowAddMovie] = useState(false);
@@ -64,8 +67,8 @@ const MovieDetails = (props) => {
           for (const key in data) {
             loadedMovies.push({
               id: data[key].id,
-              commentTitle: data[key].commentTitle,
-              commentContent: data[key].commentContent,
+              commenttitle: data[key].commenttitle,
+              commentdesc: data[key].commentdesc,
               rating: data[key].rating,
               user_id:data[key]['user_id'],
               movie_id:data[key]['movie_id'],
@@ -77,6 +80,17 @@ const MovieDetails = (props) => {
         }
       }, []);
 
+  const arrowStyle = {
+    fontSize: "4em",
+    color: "#333",
+    margin: "2rem",
+    position: "fixed",
+    top: "20px",
+    left: "20px",
+    zIndex: "999",
+    cursor: "pointer"
+  };
+
       useEffect(() => {
         fetchMoviesHandler(`http://localhost:8080/ratings/moviebyid/${state.movie.id}`,setReviews);
       },[fetchMoviesHandler])
@@ -84,9 +98,12 @@ const MovieDetails = (props) => {
 
     return (
         <>
+          <div onClick={() => {navigate("/")}} style={{ display: "flex", alignItems: "center", marginBottom: "1rem"}}>
+              <FontAwesomeIcon icon={faArrowLeft} style={arrowStyle} />
+          </div>
         <div style={{display:"flex",justifyContent:"center",alignItem:"center",height:"100%"}}>
             <section>
-                 <Details releaseDate={state.movie.releaseDate} rating={state.movie.rating} director={state.movie.director} category={state.movie.category} image={state.movie.image}  title={state.movie.title} ></Details>
+                 <Details releaseDate={state.movie.releasedate} rating={state.movie.rating} director={state.movie.moviedirector} category={state.movie.moviecategory} image={state.movie.image}  title={state.movie.title} ></Details>
             </section>
             <section>
                 <Review reviews={reviews} setShowAddMovie={setShowAddMovie} ></Review>

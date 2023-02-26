@@ -38,11 +38,11 @@ const MoviePage = (props) => {
           loadedMovies.push({
             id: data[key].id,
             title: data[key].title,
-            releaseDate: data[key].releaseDate,
+            releasedate: data[key].releasedate,
             rating: data[key].rating,
             image: data[key].image,
-            category: data[key].category,
-            director: data[key].director
+            moviecategory: data[key].moviecategory,
+            moviedirector: data[key].moviedirector
           });
         }
 

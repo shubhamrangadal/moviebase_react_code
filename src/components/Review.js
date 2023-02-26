@@ -4,6 +4,7 @@ import Popup from "./AddReview";
 
 
 const Review = (props) => {
+  console.log("Review",props);
     const titleStyle = {
         fontSize: '6em',
         fontWeight: 'bold',

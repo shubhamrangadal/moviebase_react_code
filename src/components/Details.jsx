@@ -12,7 +12,7 @@ const Details = (props) => {
   };
 
   const imageStyle = {
-    width: "50%", // updated width
+    width: "30%", // updated width
     maxHeight: "500px",
     objectFit: "contain",
     marginBottom: "2rem",
@@ -43,9 +43,9 @@ const Details = (props) => {
       <video width="850" height="700" controls>
         <source src={videos} type="video/mp4"></source>
       </video>
-      <div style={{ display: "flex", alignItems: "center" }}>
+      <div style={{ display: "flex", alignItems: "flex-start",justifyContent:"space-around" }}>
         <img src={props.image} style={imageStyle} alt="Movie Poster" />
-        <div style={{ display: "flex", flexDirection: "column" }}>
+        <div style={{ display: "flex", flexDirection: "column",alignItems:"flex-start",justifyContent:"space-between",marginTop: "1rem", }}>
           <h2 style={titleStyle}>
             <span>{props.title}</span>
           </h2>
